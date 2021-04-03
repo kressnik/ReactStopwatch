@@ -26,11 +26,13 @@ stream$.subscribe(
 
 fromEvent(startBtn, 'click')
     .subscribe(e => {
+        statBtn('start');
         startTimer = true;
     });
 
 fromEvent(stopBtn, 'click')
     .subscribe(e => {
+        statBtn('stop');
         startTimer = false;
         time = 0;
         display.innerHTML = `00:00:00`;
@@ -38,7 +40,7 @@ fromEvent(stopBtn, 'click')
 
 fromEvent(resetBtn, 'click')
     .subscribe(e => {
-        if (!startTimer) return;
+        statBtn('reset');
         time = 0;
         display.innerHTML = `00:00:00`;
     });
@@ -54,7 +56,37 @@ fromEvent(waitBtn, 'click')
                 countClickWait = 0;
             }, 300)
         } else if(countClickWait > 1) {
+            statBtn('wait');
             startTimer = false;
             countClickWait = 0;
         }
     });
+
+function statBtn(action) {
+    const btn = {
+        action: (arr, state) => {
+            arr.map(btn => btn.disabled = state);
+        },
+        default: function() {
+            this.action([startBtn, stopBtn, resetBtn, waitBtn], false);
+        },
+        start: function() {
+            this.action([startBtn], true);
+        },
+        stop: function() {
+            this.action([stopBtn, resetBtn, waitBtn], true);
+        },
+        reset: function() {
+            this.action([startBtn], true);
+        },
+        wait: function() {
+            this.action([resetBtn], true);
+        }
+    }
+    btn.default();
+    
+    if(btn[action]) {
+        btn[action]();
+    }
+
+}
