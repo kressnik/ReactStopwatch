@@ -22,7 +22,7 @@ stream$.subscribe(
         const getMinutes = `0${Math.floor((time / 600) % 60)}`.slice(-2);
         const getHours = `0${Math.floor((time / 36000) % 24)}`.slice(-2);
 
-        display.innerHTML = `${getHours}:${getMinutes}:${getSeconds}`;
+        display.innerHTML = [getHours, getMinutes, getSeconds].join(' : ');
     });
 
 fromEvent(startBtn, 'click')
@@ -36,14 +36,14 @@ fromEvent(stopBtn, 'click')
         statBtn('stop');
         startTimer = false;
         time = 0;
-        display.innerHTML = `00:00:00`;
+        display.innerHTML = `00 : 00 : 00`;
     });
 
 fromEvent(resetBtn, 'click')
     .subscribe(e => {
         statBtn('reset');
         time = 0;
-        display.innerHTML = `00:00:00`;
+        display.innerHTML = `00 : 00 : 00`;
     });
 
 const clickWait$ = fromEvent(waitBtn, 'click');

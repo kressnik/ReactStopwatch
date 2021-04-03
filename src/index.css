@@ -1,13 +1,147 @@
+* {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+}
+*,
+*:before,
+*:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+:focus,
+:active {
+	outline: none;
+}
+a:focus,
+a:active {
+	outline: none;
+}
+aside,
+nav,
+footer,
+header,
+section {
+	display: block;
+}
+html,
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	height: 100%;
+	/* min-width: 1440px; */
+}
+body {
+	line-height: 1;
+	font-family: "Heebo";
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+input,
+button,
+textarea {
+	font-family: "Heebo";
+}
+input::-ms-clear {
+	display: none;
+}
+button {
+	cursor: pointer;
+}
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
+a,
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+ul li {
+	list-style: none;
+}
+img {
+	vertical-align: top;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: inherit;
+	font-size: inherit;
+}
+body {
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+}
+@media screen and (max-width: 900px) {
+  body {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.timer {
+  border-radius: 15px;
+  margin: 25px 0;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #000;
+  color: #fff;
+  width: 200px;
+  max-height: 150px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@media screen and (max-width: 900px) {
+  .timer {
+    width: 100%;
+  }
+}
+
+.timer h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.timer__body {
+  text-align: center;
+}
+
+.timer__display {
+  font-size: 18px;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.timer__buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.timer__buttons button {
+  font-size: 14px;
+  padding: 1px 6px;
+  margin: 0 3px;
+  border-radius: 2px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+}
+
+.timer__buttons button:hover:not([disabled]) {
+  background-color: #000;
+  margin: -1px 2px;
+  border: #fff solid 1px;
+  color: #fff;
+}
+
+.timer__buttons button:disabled {
+  cursor: no-drop;
 }
