@@ -1,4 +1,5 @@
-import {interval, fromEvent} from 'rxjs';
+import { interval, fromEvent } from 'rxjs';
+import { map, buffer, debounceTime} from 'rxjs/operators';
 
 const timerBox = document.querySelector('.timer');
 const startBtn = timerBox.querySelector('.start');
@@ -45,47 +46,46 @@ fromEvent(resetBtn, 'click')
         display.innerHTML = `00:00:00`;
     });
 
-let timerClickWait = null;
-let countClickWait = 0;
-fromEvent(waitBtn, 'click')
-    .subscribe(e => {
-        countClickWait++;
-        if(timerClickWait == null){
-            timerClickWait = setTimeout(() => {
-                timerClickWait = null;
-                countClickWait = 0;
-            }, 300)
-        } else if(countClickWait > 1) {
+const clickWait$ = fromEvent(waitBtn, 'click');
+const buff$ = clickWait$.pipe(
+    debounceTime(300),
+);
+
+clickWait$.pipe(
+    buffer(buff$),
+    map(list => { return list.length; })
+)
+    .subscribe((val) => {
+        if (val >= 2) {
             statBtn('wait');
             startTimer = false;
-            countClickWait = 0;
         }
-    });
+    })
 
 function statBtn(action) {
     const btn = {
         action: (arr, state) => {
             arr.map(btn => btn.disabled = state);
         },
-        default: function() {
+        default: function () {
             this.action([startBtn, stopBtn, resetBtn, waitBtn], false);
         },
-        start: function() {
+        start: function () {
             this.action([startBtn], true);
         },
-        stop: function() {
+        stop: function () {
             this.action([stopBtn, resetBtn, waitBtn], true);
         },
-        reset: function() {
+        reset: function () {
             this.action([startBtn], true);
         },
-        wait: function() {
+        wait: function () {
             this.action([resetBtn], true);
         }
     }
     btn.default();
-    
-    if(btn[action]) {
+
+    if (btn[action]) {
         btn[action]();
     }
 
